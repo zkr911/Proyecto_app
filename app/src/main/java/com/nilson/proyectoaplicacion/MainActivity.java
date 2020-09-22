@@ -2,7 +2,9 @@ package com.nilson.proyectoaplicacion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +26,19 @@ public class MainActivity extends AppCompatActivity {
     btnverhora = findViewById(R.id.btnverhora);
 
 
+
+
+
+    btnagregarhora.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+
+            Intent intento_agregar = new Intent(MainActivity.this,AgregarHoraActivity.class);
+            startActivity(intento_agregar);
+
+        }
+    });
 
 
 
