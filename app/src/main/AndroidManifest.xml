@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AgregarHoraActivity"></activity>
+        <activity android:name=".VerHorasActivity"
+            android:label="Ver Historial de Alarmas"></activity>
+        <activity android:name=".AgregarHoraActivity"
+            android:label="Agregar Alarma"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

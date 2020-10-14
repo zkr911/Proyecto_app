@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class AgregarHoraActivity extends AppCompatActivity {
    private TextView eHora;
    private int hora,minutos;
 
+   private Button btnguardar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class AgregarHoraActivity extends AppCompatActivity {
         fechainicio = (TextView) findViewById(R.id.tvfechainicio);
         fechatermino = (TextView) findViewById(R.id.tvfechatermino);
         eHora = (TextView) findViewById(R.id.eHora);
-
+        btnguardar = findViewById(R.id.btnguardar);
         //Escuchador de Hora.
         eHora.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +71,13 @@ public class AgregarHoraActivity extends AppCompatActivity {
         fechainicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar calendario = Calendar.getInstance();
-                int dia = calendario.get(Calendar.DAY_OF_MONTH);
-                int mes = calendario.get(Calendar.MONTH);
-                int agno = calendario.get(Calendar.YEAR);
+                Calendar calendarioinicial = Calendar.getInstance();
+                int dia = calendarioinicial.get(Calendar.DAY_OF_MONTH);
+                int mes = calendarioinicial.get(Calendar.MONTH);
+                int agno = calendarioinicial.get(Calendar.YEAR);
+
+
+
                 DatePickerDialog dialog = new DatePickerDialog(AgregarHoraActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,fechaescuchadorinicio,agno,mes,dia);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -94,10 +100,11 @@ fechaescuchadorinicio = new DatePickerDialog.OnDateSetListener() {
 fechatermino.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        Calendar calendario = Calendar.getInstance();
-        int dia = calendario.get(Calendar.DAY_OF_MONTH);
-        int mes = calendario.get(Calendar.MONTH);
-        int agno = calendario.get(Calendar.YEAR);
+        Calendar calendariofinal = Calendar.getInstance();
+        int dia = calendariofinal.get(Calendar.DAY_OF_MONTH);
+        int mes = calendariofinal.get(Calendar.MONTH);
+        int agno = calendariofinal.get(Calendar.YEAR);
+
         DatePickerDialog dialog = new DatePickerDialog(AgregarHoraActivity.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,fechaescuchadortermino,agno,mes,dia);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
@@ -116,18 +123,10 @@ fechaescuchadortermino = new DatePickerDialog.OnDateSetListener() {
 
 
 
-
-    if(Integer.parseInt(dias) <= dia){
         fechatermino.setText(datef);
-        //Toast.makeText(AgregarHoraActivity.this,"Fecha termino : "+datef,Toast.LENGTH_LONG).show();
+
         Toast.makeText(AgregarHoraActivity.this,dias+"/"+meses+"/"+agnos+"  ",Toast.LENGTH_LONG).show();
-    }else {
 
-
-
-       Toast.makeText(AgregarHoraActivity.this,"El dia ingresado no es valido"+"dias"+"",Toast.LENGTH_LONG).show();
-
-    }
 
 
     }
@@ -137,7 +136,22 @@ fechaescuchadortermino = new DatePickerDialog.OnDateSetListener() {
 
 
 
+btnguardar.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+        String fechai = fechainicio.getText().toString();
+        String fechaf = fechatermino.getText().toString();
+        String alarm = eHora.getText().toString();
+
+        informacionDatos datoscompletos = new informacionDatos(fechaf,fechai,alarm);
+        MainActivity.Arraydatos.add(datoscompletos);
+
+
+
+
+    }
+});
 
 
 
