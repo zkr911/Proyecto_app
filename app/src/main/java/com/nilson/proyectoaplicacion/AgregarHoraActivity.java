@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,6 +47,8 @@ public class AgregarHoraActivity extends AppCompatActivity {
         fechatermino = (TextView) findViewById(R.id.tvfechatermino);
         eHora = (TextView) findViewById(R.id.eHora);
         btnguardar = findViewById(R.id.btnguardar);
+
+
         //Escuchador de Hora.
         eHora.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +67,11 @@ public class AgregarHoraActivity extends AppCompatActivity {
         });
 
 
+        fechainicio.setText(null);
+        final Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        final String DateTime = simpleDateFormat.format(cal.getTime());
+        fechainicio.setText(DateTime);
 
 
 
@@ -86,12 +94,29 @@ public class AgregarHoraActivity extends AppCompatActivity {
 
 fechaescuchadorinicio = new DatePickerDialog.OnDateSetListener() {
     @Override
-    public void onDateSet(DatePicker datePicker, int dia, int mes, int agno) {
+    public void onDateSet(DatePicker datePicker, int agno, int mes, int dia) {
         mes = mes+1;
-        //Log.d(Tag, "Fecha dia/mes/año  :" + dia + " / " + mes + "/" + agno)
-        String date = dia+"/"+mes+"/"+agno;
-        fechainicio.setText(date);
-        Toast.makeText(AgregarHoraActivity.this,"Fecha inicio"+date,Toast.LENGTH_LONG).show();
+
+        if(agno < cal.get(Calendar.YEAR)){
+
+            Toast.makeText(AgregarHoraActivity.this,"Error en el año no puede ser menor : "+agno,Toast.LENGTH_LONG).show();
+    return;
+        }else if(mes < cal.get(Calendar.MONTH)+1 ){
+
+            Toast.makeText(AgregarHoraActivity.this,"Error en el mes no puede ser menor : "+mes,Toast.LENGTH_LONG).show();
+        return;
+        }else if(dia < cal.get(Calendar.DAY_OF_MONTH) ){
+
+            Toast.makeText(AgregarHoraActivity.this,"Error en el dia no puede ser menor : "+dia,Toast.LENGTH_LONG).show();
+        return;
+        }
+
+
+
+
+        String datei = dia+"/"+mes+"/"+agno;
+        fechainicio.setText(datei);
+        Toast.makeText(AgregarHoraActivity.this,"Fecha inicio"+datei,Toast.LENGTH_LONG).show();
     }
 };
 
@@ -114,7 +139,7 @@ fechatermino.setOnClickListener(new View.OnClickListener() {
 fechaescuchadortermino = new DatePickerDialog.OnDateSetListener() {
     @Override
     public void onDateSet(DatePicker datePicker, int agno, int mes, int dia) {
-    mes = mes+1;
+   // mes = mes+1;
     String datef = dia+"/"+mes+"/"+agno;
 
     String dias = String.valueOf(dia);
